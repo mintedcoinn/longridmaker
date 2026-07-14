@@ -3,12 +3,14 @@ from __future__ import annotations
 import mimetypes
 import re
 import tempfile
+from io import BytesIO
 from pathlib import Path
 
 from docx import Document
 from docx.oxml.ns import qn
 from docx.table import Table
 from docx.text.paragraph import Paragraph
+from PIL import Image
 
 _HEADING_STYLE_RE = re.compile(r"^Heading\s*(\d+)$", re.IGNORECASE)
 _LIST_STYLE_RE = re.compile(
@@ -234,9 +236,27 @@ def _save_image_part(image_part, assets_dir: Path, figure_number: int) -> Path:
     if not suffix:
         suffix = mimetypes.guess_extension(getattr(image_part, "content_type", "")) or ".bin"
 
-    image_path = assets_dir / f"docx_figure_{figure_number:04d}{suffix}"
+    normalized_suffix = suffix.lower()
+    image_path = assets_dir / f"docx_figure_{figure_number:04d}"
+
+    if normalized_suffix in {".wmf", ".emf"}:
+        converted = _save_preview_png(image_part.blob, image_path.with_suffix(".png"))
+        if converted is not None:
+            return converted
+
+    image_path = image_path.with_suffix(suffix)
     image_path.write_bytes(image_part.blob)
     return image_path
+
+
+def _save_preview_png(blob: bytes, target_path: Path) -> Path | None:
+    try:
+        with Image.open(BytesIO(blob)) as image:
+            image.load()
+            image.save(target_path, format="PNG")
+        return target_path
+    except Exception:
+        return None
 
 
 def _extract_table_rows(table: Table) -> list[list[str]]:

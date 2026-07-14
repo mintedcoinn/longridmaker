@@ -1,0 +1,267 @@
+.app-shell {
+  min-height: 100vh;
+  padding: 32px 0 56px;
+  background: #f4f6f8;
+}
+
+.upload-panel,
+.status-window,
+.toc-panel,
+.article-header,
+.article-section {
+  border: 1px solid #dbe1e8;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 28px rgba(18, 31, 53, 0.06) !important;
+}
+
+.upload-panel {
+  padding: 24px;
+}
+
+.status-window {
+  margin-top: 20px;
+  padding: 18px;
+}
+
+.eyebrow {
+  letter-spacing: 0.12em !important;
+  font-weight: 700 !important;
+  color: #315f72 !important;
+}
+
+.title {
+  margin-top: 6px !important;
+  font-weight: 760 !important;
+  line-height: 1.08 !important;
+}
+
+.subtitle {
+  margin-top: 10px !important;
+  max-width: 760px;
+}
+
+.longread-layout {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.toc-panel {
+  position: sticky;
+  top: 20px;
+  padding: 18px;
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+}
+
+.toc-link {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  padding: 8px;
+  border-radius: 6px;
+  color: #314154;
+  font-size: 0.92rem;
+}
+
+.toc-link:hover {
+  background: #eef4f5;
+}
+
+.toc-link span {
+  overflow-wrap: anywhere;
+}
+
+.article {
+  display: grid;
+  gap: 18px;
+}
+
+.article-header {
+  padding: 28px;
+}
+
+.article-header h2 {
+  margin: 6px 0 10px;
+  max-width: 920px;
+  font-weight: 780;
+  line-height: 1.08;
+}
+
+.article-section {
+  padding: 28px;
+  scroll-margin-top: 24px;
+}
+
+.article-section h4 {
+  font-weight: 740;
+  line-height: 1.18;
+}
+
+.lead {
+  max-width: 860px;
+  color: #415165;
+  font-size: 1.08rem !important;
+}
+
+.article-paragraph {
+  max-width: 900px;
+  color: #202b38;
+  line-height: 1.72 !important;
+}
+
+.block-label {
+  align-items: center;
+  color: #315f72;
+  text-transform: uppercase;
+}
+
+.block-label .MuiTypography-root {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.takeaways {
+  max-width: 900px;
+  padding: 14px 16px;
+  border-left: 4px solid #4f7c8a;
+  border-radius: 6px;
+  background: #f3f7f8;
+}
+
+.takeaways ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.takeaways li {
+  margin: 6px 0;
+  line-height: 1.55;
+}
+
+.media-section {
+  background: #fbfcfd !important;
+}
+
+.quiz-section {
+  background: #fbfcfd !important;
+}
+
+.quiz-question {
+  max-width: 900px;
+  padding: 18px;
+  border: 1px solid #dbe1e8;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.quiz-question-title {
+  margin-bottom: 10px !important;
+  font-weight: 700 !important;
+}
+
+.quiz-option {
+  width: 100%;
+  margin: 4px 0 !important;
+  padding: 8px 10px;
+  border: 1px solid #dbe1e8;
+  border-radius: 6px;
+}
+
+.quiz-option.is-correct {
+  border-color: #6aa278;
+  background: #edf7ef;
+}
+
+.quiz-option.is-wrong {
+  border-color: #c57a74;
+  background: #fff1f0;
+}
+
+.quiz-feedback {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 6px;
+}
+
+.quiz-feedback.is-correct {
+  color: #245a35;
+  background: #edf7ef;
+}
+
+.quiz-feedback.is-wrong {
+  color: #7b2e2a;
+  background: #fff1f0;
+}
+
+.data-table {
+  border: 1px solid #dbe1e8;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.data-table th {
+  font-weight: 700;
+  background: #eef4f5;
+}
+
+.data-table th,
+.data-table td {
+  vertical-align: top;
+  border-color: #e4e9ee;
+}
+
+.longread-image {
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  border: 1px solid #dbe1e8;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.image-placeholder {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  border: 1px dashed #a8b4c0;
+  border-radius: 8px;
+  color: #596879;
+  background: #f4f6f8;
+}
+
+@media (max-width: 900px) {
+  .longread-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .toc-panel {
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-shell {
+    padding: 18px 0 36px;
+  }
+
+  .upload-panel,
+  .article-header,
+  .article-section {
+    padding: 18px;
+  }
+
+  .article-header h2 {
+    font-size: 2.05rem !important;
+  }
+
+  .article-section h4 {
+    font-size: 1.55rem !important;
+  }
+}

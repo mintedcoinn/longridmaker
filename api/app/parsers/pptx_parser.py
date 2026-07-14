@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import mimetypes
 import tempfile
+from io import BytesIO
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -9,6 +10,7 @@ from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE_TYPE
 from pptx.shapes.base import BaseShape
 from pptx.table import Table
+from PIL import Image
 
 _CAPTION_GAP_THRESHOLD = 1_200_000
 _CAPTION_HORIZONTAL_OVERLAP_RATIO = 0.35
@@ -244,9 +246,27 @@ def _save_image(shape: BaseShape, assets_dir: Path, slide_number: int, image_num
     if not suffix:
         suffix = mimetypes.guess_extension(image.content_type) or ".bin"
 
-    image_path = assets_dir / f"pptx_slide_{slide_number:04d}_image_{image_number:04d}{suffix}"
+    normalized_suffix = suffix.lower()
+    image_path = assets_dir / f"pptx_slide_{slide_number:04d}_image_{image_number:04d}"
+
+    if normalized_suffix in {".wmf", ".emf"}:
+        converted = _save_preview_png(image.blob, image_path.with_suffix(".png"))
+        if converted is not None:
+            return converted
+
+    image_path = image_path.with_suffix(suffix)
     image_path.write_bytes(image.blob)
     return image_path
+
+
+def _save_preview_png(blob: bytes, target_path: Path) -> Path | None:
+    try:
+        with Image.open(BytesIO(blob)) as image:
+            image.load()
+            image.save(target_path, format="PNG")
+        return target_path
+    except Exception:
+        return None
 
 
 def _get_picture_description(shape: BaseShape) -> str | None:
